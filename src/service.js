@@ -15,7 +15,7 @@ export const getAllDeliveries = async () => {
 
 export const setDeliveryStatus = async (deliveryId, status) => {
     try {
-        await axios.post(`${DELIVERY_API_URL}/delivery/${deliveryId}/status`, { status });
+        await axios.put(`${DELIVERY_API_URL}/delivery/${deliveryId}/status`, { status });
     } catch (error) {
         console.error('Error setting delivery status:', error);
         throw error;
