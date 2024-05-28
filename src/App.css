@@ -22,7 +22,7 @@ li {
 
 button {
   padding: 5px 10px;
-  margin-top: 10px;
+  margin: 10px 10px 0 0;
   background: #007bff;
   color: white;
   border: none;

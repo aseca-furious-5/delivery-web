@@ -10,6 +10,7 @@ const DeliveryList = () => {
         const fetchDeliveries = async () => {
             try {
                 const data = await getAllDeliveries();
+                data.sort((a, b) => a.id - b.id);
                 setDeliveries(data);
             } catch (error) {
                 setError(error);
@@ -40,6 +41,22 @@ const DeliveryList = () => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
+    const handleDeliveryDeparture = async (deliveryId) => {
+        try {
+            await setDeliveryStatus(deliveryId, 'ON_THE_WAY');
+            setDeliveries((prevDeliveries) =>
+                prevDeliveries.map((delivery) =>
+                    delivery.id === deliveryId
+                        ? { ...delivery, deliveryStatus: 'ON_THE_WAY' }
+                        : delivery
+                )
+            );
+        } catch (error) {
+            console.error('Error setting delivery status:', error);
+            setError(error);
+        }
+    };
+
     return (
         <div>
             <h1>Deliveries</h1>
@@ -49,6 +66,12 @@ const DeliveryList = () => {
                         <div>
                             <strong>Order ID:</strong> {delivery.orderId} <br />
                             <strong>Status:</strong> {delivery.deliveryStatus} <br />
+                            <button
+                                onClick={() => handleDeliveryDeparture(delivery.id)}
+                                disabled={delivery.deliveryStatus !== 'PENDING'}
+                            >
+                                Mark as On the Way
+                            </button>
                             <button
                                 onClick={() => handleDeliveryArrival(delivery.id)}
                                 disabled={delivery.deliveryStatus === 'DELIVERED'}
