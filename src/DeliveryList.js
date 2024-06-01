@@ -74,7 +74,7 @@ const DeliveryList = () => {
                             </button>
                             <button
                                 onClick={() => handleDeliveryArrival(delivery.id)}
-                                disabled={delivery.deliveryStatus === 'DELIVERED'}
+                                disabled={delivery.deliveryStatus !== 'ON_THE_WAY'}
                             >
                                 Mark as Delivered
                             </button>
